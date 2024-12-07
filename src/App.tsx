@@ -1,13 +1,11 @@
-import { Box, Typography } from "@mui/material";
 import Navbar from "./components/Navbar";
+import { LandingPage } from "./components/LandingPage";
 
 function App() {
   return (
     <>
       <Navbar />
-      <Box>
-        <Typography>homepage</Typography>
-      </Box>
+      <LandingPage />
     </>
   );
 }

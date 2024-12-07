@@ -2,7 +2,6 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
@@ -86,7 +85,9 @@ export default function Navbar(props: Props) {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar component="nav">
-        <Toolbar sx={{ background: "#6DA5C0", px: { xs: 2, sm: 3 } }}>
+        <Toolbar
+          sx={{ height: "70px", background: "#072e33", px: { xs: 2, sm: 3 } }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -142,8 +143,8 @@ export default function Navbar(props: Props) {
                 id="logo-icon"
                 component="img"
                 src={logo}
-                width={"60px"}
-                height={"60px"}
+                width={"50px"}
+                height={"50px"}
                 mr={"10px"}
                 sx={{ transition: "all 0.1s ease-in-out" }}
               />
@@ -183,7 +184,7 @@ export default function Navbar(props: Props) {
               sx={{ display: { xs: "none", sm: "block" } }}
             >
               {navItems.map((item) => (
-                <Button key={item} sx={{ color: "#fff" }}>
+                <Button key={item} sx={{ color: "#b8e3e6" }}>
                   {item}
                 </Button>
               ))}
