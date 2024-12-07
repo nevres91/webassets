@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box, Button, Tabs, Tab, Typography, Paper } from "@mui/material";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -45,32 +45,10 @@ const CodeShowcase: React.FC<CodeShowcaseProps> = ({
     },
     {
       label: "MUI",
-      language: "MaterialUI",
+      language: "typescript",
       code: MUI === "" ? "No Code Available" : MUI,
     },
   ];
-
-  const ComponentA = () => <div>Component A</div>;
-  const ComponentB = () => <div>Component B</div>;
-
-  const DynamicComponentRenderer = ({
-    componentName,
-  }: {
-    componentName: string;
-  }) => {
-    const components: Record<string, React.FC> = {
-      ComponentA,
-      ComponentB,
-    };
-
-    const ComponentToRender = components[componentName];
-
-    return ComponentToRender ? (
-      <ComponentToRender />
-    ) : (
-      <div>No Component Found</div>
-    );
-  };
 
   const handleCopyCode = async () => {
     try {
@@ -130,10 +108,12 @@ const CodeShowcase: React.FC<CodeShowcaseProps> = ({
 
       {/* Code Tabs */}
       <Box
+        id={"code-container"}
         sx={{
           width: "50%",
           backgroundColor: "#05161a",
           borderRadius: "10px",
+          position: "relative",
           overflow: "auto",
         }}
       >
@@ -157,37 +137,53 @@ const CodeShowcase: React.FC<CodeShowcaseProps> = ({
           ))}
         </Tabs>
         <Box sx={{ mt: 2, mx: 3 }}>
-          <SyntaxHighlighter
-            language={codeSnippets[activeTab].language}
-            style={dracula} // Dark theme
-            customStyle={{
-              borderRadius: "8px",
-              fontSize: "0.9rem",
-              padding: "16px",
-              minHeight: "60px",
-            }}
-          >
-            {codeSnippets[activeTab].code}
-          </SyntaxHighlighter>
-          <Button
-            startIcon={<ContentCopyIcon />}
-            onClick={handleCopyCode}
-            sx={{
-              fontSize: "12px",
-              height: "30px",
-              width: "90px",
-              position: "absolute",
-              top: 70,
-              right: 50,
-              backgroundColor: "rgba(105, 105, 105, 0.5)",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "#294d61",
-              },
-            }}
-          >
-            {copyStatus || "Copy"}
-          </Button>
+          <Box>
+            <Box
+              display={"flex"}
+              width={"100%"}
+              justifyContent={"end"}
+              sx={{
+                transition: "all ease-in-out 0.2s",
+                transform: "translateY(5px)",
+                position: "sticky",
+                top: 2,
+                paddingRight: "10px",
+              }}
+            >
+              <Button
+                startIcon={<ContentCopyIcon />}
+                onClick={handleCopyCode}
+                sx={{
+                  transition: "all ease-in 0.1s",
+                  fontSize: "12px",
+                  height: "30px",
+                  width: "90px",
+                  backgroundColor: "rgba(105, 105, 105, 0.5)",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#294d61",
+                  },
+                }}
+              >
+                {copyStatus || "Copy"}
+              </Button>
+            </Box>
+            <SyntaxHighlighter
+              id={"syntax-highlighter"}
+              language={codeSnippets[activeTab].language}
+              style={dracula} // Dark theme
+              customStyle={{
+                borderRadius: "8px",
+                fontSize: "0.9rem",
+                padding: "16px",
+                minHeight: "60px",
+                // transform: "translateY(-34px)",
+                marginTop: "-28px",
+              }}
+            >
+              {codeSnippets[activeTab].code}
+            </SyntaxHighlighter>
+          </Box>
         </Box>
       </Box>
     </Box>

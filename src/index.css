@@ -4,6 +4,14 @@
   box-sizing: border-box;
 }
 
+#code-container #syntax-highlighter::-webkit-scrollbar {
+  display: none;
+}
+
+#code-container {
+  scrollbar-width: none; /* For Firefox */
+}
+
 /* Container styles */
 .code-container {
   position: relative;
