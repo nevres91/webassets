@@ -3,12 +3,14 @@ import { Box, Button, Tabs, Tab, Typography, Paper } from "@mui/material";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import RegisterButton from "./RegisterButton";
 
 interface CodeShowcaseProps {
   title: string;
   htmlCode: string;
   cssCode: string;
   jsCode: string;
+  MUI: string;
 }
 
 const CodeShowcase: React.FC<CodeShowcaseProps> = ({
@@ -16,6 +18,7 @@ const CodeShowcase: React.FC<CodeShowcaseProps> = ({
   htmlCode,
   cssCode,
   jsCode,
+  MUI,
 }) => {
   const [activeTab, setActiveTab] = useState(0);
   const [copyStatus, setCopyStatus] = useState<string | null>(null);
@@ -25,10 +28,49 @@ const CodeShowcase: React.FC<CodeShowcaseProps> = ({
   };
 
   const codeSnippets = [
-    { label: "HTML", language: "html", code: htmlCode },
-    { label: "CSS", language: "css", code: cssCode },
-    { label: "JavaScript", language: "javascript", code: jsCode },
+    {
+      label: "HTML",
+      language: "html",
+      code: htmlCode === "" ? "No Code Available" : htmlCode,
+    },
+    {
+      label: "CSS",
+      language: "css",
+      code: cssCode === "" ? "No Code Available" : cssCode,
+    },
+    {
+      label: "JavaScript",
+      language: "javascript",
+      code: jsCode === "" ? "No Code Available" : jsCode,
+    },
+    {
+      label: "MUI",
+      language: "MaterialUI",
+      code: MUI === "" ? "No Code Available" : MUI,
+    },
   ];
+
+  const ComponentA = () => <div>Component A</div>;
+  const ComponentB = () => <div>Component B</div>;
+
+  const DynamicComponentRenderer = ({
+    componentName,
+  }: {
+    componentName: string;
+  }) => {
+    const components: Record<string, React.FC> = {
+      ComponentA,
+      ComponentB,
+    };
+
+    const ComponentToRender = components[componentName];
+
+    return ComponentToRender ? (
+      <ComponentToRender />
+    ) : (
+      <div>No Component Found</div>
+    );
+  };
 
   const handleCopyCode = async () => {
     try {
@@ -75,8 +117,14 @@ const CodeShowcase: React.FC<CodeShowcaseProps> = ({
             background: "#f9f9f9",
           }}
         >
-          <style>{cssCode}</style>
-          <div dangerouslySetInnerHTML={{ __html: htmlCode }} />
+          {MUI ? (
+            <RegisterButton />
+          ) : (
+            <>
+              <style>{cssCode}</style>
+              <div dangerouslySetInnerHTML={{ __html: htmlCode }} />
+            </>
+          )}
         </Box>
       </Paper>
 
@@ -86,6 +134,7 @@ const CodeShowcase: React.FC<CodeShowcaseProps> = ({
           width: "50%",
           backgroundColor: "#05161a",
           borderRadius: "10px",
+          overflow: "auto",
         }}
       >
         <Tabs
@@ -98,6 +147,7 @@ const CodeShowcase: React.FC<CodeShowcaseProps> = ({
               color: "#b8e3e6", // Replace with your custom color
               "&.Mui-selected": {
                 color: "white", // Replace with your selected color
+                background: "#112b25",
               },
             },
           }}
@@ -114,6 +164,7 @@ const CodeShowcase: React.FC<CodeShowcaseProps> = ({
               borderRadius: "8px",
               fontSize: "0.9rem",
               padding: "16px",
+              minHeight: "60px",
             }}
           >
             {codeSnippets[activeTab].code}
@@ -127,7 +178,7 @@ const CodeShowcase: React.FC<CodeShowcaseProps> = ({
               width: "90px",
               position: "absolute",
               top: 70,
-              right: 30,
+              right: 50,
               backgroundColor: "rgba(105, 105, 105, 0.5)",
               color: "white",
               "&:hover": {

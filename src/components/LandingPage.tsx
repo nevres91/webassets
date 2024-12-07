@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { Sidebar } from "./Sidebar";
 import CodeShowcase from "./CodeShowcase";
-import { buttonCode } from "../assets/Code";
+import { registerButton } from "../assets/Code";
 
 export const LandingPage = () => {
   return (
@@ -16,11 +16,19 @@ export const LandingPage = () => {
       >
         <Sidebar />
         {/* <CodeShowcase /> */}
-        <CodeShowcase
+        {/* <CodeShowcase
           title={buttonCode.title}
-          htmlCode={buttonCode.HTMLCode}
-          cssCode={buttonCode.CSSCode}
-          jsCode={buttonCode.jsCode}
+          htmlCode={buttonCode.HTMLCode ? buttonCode.HTMLCode : ""}
+          cssCode={buttonCode.CSSCode ? buttonCode.CSSCode : ""}
+          jsCode={buttonCode.jsCode ? buttonCode.jsCode : ""}
+          MUI={""}
+        /> */}
+        <CodeShowcase
+          title={registerButton.title}
+          htmlCode={""}
+          cssCode={""}
+          jsCode={""}
+          MUI={registerButton.MUI ? registerButton.MUI : ""}
         />
       </Box>
     </>
